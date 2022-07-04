@@ -1,7 +1,7 @@
-import { Todo } from './todo.entity';
-import { TODO_REPOSITORY } from '../../core/constants';
+// import { Todo } from './todo.model';
+// import { TODO_REPOSITORY } from '../../common/constants/repository.constants'
 
-export const todoProviders = [{
-    provide: TODO_REPOSITORY,
-    useValue: Todo,
-}];
+// export const todoProviders = [{
+//     provide: TODO_REPOSITORY,
+//     useValue: Todo,
+// }];
