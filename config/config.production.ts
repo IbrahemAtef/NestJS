@@ -1,3 +1,4 @@
+require('dotenv').config();
 export default () => ({
   database: {
     dialect: process.env.DB_DIALECT,

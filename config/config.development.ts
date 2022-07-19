@@ -1,6 +1,7 @@
+require('dotenv').config()
 export default () => ({
   database: {
-    dialect: process.env.DB_DIALECT,
+    dialect: process.env.DB_DIALECT || 'mysql',
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     username: process.env.DB_USER,
