@@ -1,42 +1,37 @@
-// import {
-//   Table,
-//   Column,
-//   Model,
-//   DataType,
-//   ForeignKey,
-//   BelongsTo,
-// } from 'sequelize-typescript';
-// import { User } from '../users/user.model';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  ForeignKey,
+  BelongsTo,
+} from 'sequelize-typescript';
+import { User } from '../users/user.model';
 
-// @Table({
-//   timestamps: false,
-// })
-// export class Todo extends Model<Todo> {
-//   @Column({
-//     type: DataType.STRING,
-//     allowNull: false,
-//   })
-//   title: string;
+@Table({
+  timestamps: false,
+  tableName: 'todos',
+})
+export class Todo extends Model {
+    @Column({
+        primaryKey: true,
+        autoIncrement: true,
+    })
+    id!: number;
 
-//   @Column({
-//     type: DataType.TEXT,
-//     allowNull: false,
-//   })
-//   description: string;
+    @Column(DataType.STRING)
+    title: string;
 
-//   @Column({
-//     type: DataType.BOOLEAN,
-//     allowNull: false,
-//   })
-//   status: boolean;
+    @Column(DataType.STRING)
+    description: string;
 
-//   @ForeignKey(() => User)
-//   @Column({
-//     type: DataType.INTEGER,
-//     allowNull: false,
-//   })
-//   userId: number;
+    @Column({ defaultValue: false, type:DataType.BOOLEAN})
+    status: boolean;
 
-//   @BelongsTo(() => User)
-//   user: User;
-// }
+    @ForeignKey(() => User)
+    @Column(DataType.INTEGER)
+    userId: number;
+
+    @BelongsTo(() => User)
+    user: User;
+}

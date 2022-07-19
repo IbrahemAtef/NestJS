@@ -1,15 +1,17 @@
-// import { IsNotEmpty, MinLength, IsBoolean } from 'class-validator';
+import { IsNotEmpty, MinLength, IsBoolean, IsString } from 'class-validator';
 
-// export class TodoDto {
-//   @IsNotEmpty()
-//   @MinLength(4)
-//   readonly title: string;
+export class TodoDto {
+  @IsNotEmpty()
+  @MinLength(4)
+  @IsString()
+  title: string;
 
-//   @IsNotEmpty()
-//   readonly description: string;
+  @IsNotEmpty()
+  @IsString()
+  description: string;
 
-//   @IsNotEmpty()
-//   @IsBoolean()
-//   readonly status: boolean;
+  @IsNotEmpty()
+  @IsBoolean()
+  status: boolean;
 
-// }
+}

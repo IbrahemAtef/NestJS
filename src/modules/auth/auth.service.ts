@@ -35,7 +35,7 @@ export class AuthService {
 
   public async login(user) {
     const token = await this.generateToken(user);
-    return { user, token };
+    return { token };
   }
 
   public async create(user) {
@@ -55,8 +55,11 @@ export class AuthService {
     return { user: result, token };
   }
 
-  private async generateToken(user) {    
-    const token = await this.jwtService.signAsync(user);
+  private async generateToken(user) {
+    const u = await this.userService.findOneByEmail(user.email);
+    const id = u['dataValues']['id'];
+    
+    const token = await this.jwtService.signAsync({id});
     return token;
   }
 
