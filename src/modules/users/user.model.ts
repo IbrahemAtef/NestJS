@@ -1,14 +1,14 @@
-import { Table, Column, DataType } from 'sequelize-typescript';
+import { Table, Column, DataType, Model } from 'sequelize-typescript';
+import {GenderEnum} from '../../common/enums/gender.enum'
 
-// const tableOption: IDefineOptions = {
-//   tableName: 'Users',
-//   timestamps: false,
-// } as IDefineOptions;
+const tableOption = {
+  tableName: 'users',
+  timestamps: false,
+};
 
-// @Table(tableOption)
+@Table(tableOption)
 
-@Table
-export class User {
+export class User extends Model{
   @Column({
     primaryKey: true,
     autoIncrement: true,
@@ -24,6 +24,6 @@ export class User {
   @Column(DataType.STRING)
   password: string;
 
-  @Column(DataType.ENUM)
+  @Column(DataType.ENUM(...Object.values(GenderEnum)))
   gender: string;
 }
