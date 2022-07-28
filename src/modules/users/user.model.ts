@@ -1,18 +1,10 @@
-import { Table, Column, DataType, Model } from 'sequelize-typescript';
+import { Table, Column, DataType, Model} from 'sequelize-typescript';
 import {GenderEnum} from '../../common/enums/gender.enum'
 
-const tableOption = {
-  tableName: 'users',
-  timestamps: false,
-};
-
-@Table(tableOption)
+@Table({tableName: 'users', underscored: true})
 
 export class User extends Model{
-  @Column({
-    primaryKey: true,
-    autoIncrement: true,
-  })
+  @Column({ primaryKey: true, autoIncrement: true })
   id!: number;
 
   @Column(DataType.STRING)

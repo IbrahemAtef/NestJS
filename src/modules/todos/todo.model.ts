@@ -9,8 +9,8 @@ import {
 import { User } from '../users/user.model';
 
 @Table({
-  timestamps: false,
   tableName: 'todos',
+  underscored: true
 })
 export class Todo extends Model {
     @Column({

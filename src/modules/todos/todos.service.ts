@@ -1,8 +1,9 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { Todo } from './todo.model';
-import { TodoDto } from './dto/todo.dto';
+import { CreateTodoDto } from './dto/create-todo.dto';
 import { User } from '../users/user.model';
 import { TODO_REPOSITORY } from '../../common/constants/repository.constants';
+import { MessageEnum } from 'src/common/enums/message.enum';
 
 @Injectable()
 export class TodosService {
@@ -10,7 +11,7 @@ export class TodosService {
     @Inject(TODO_REPOSITORY) private readonly todoRepository: typeof Todo,
   ) {}
 
-  async create(todo: TodoDto, userId): Promise<Todo> {
+  async create(todo: CreateTodoDto, userId): Promise<Todo> {
     let result = await this.todoRepository.create<Todo>({
       ...todo,
       userId,
@@ -26,16 +27,17 @@ export class TodosService {
     return result;
   }
 
-  // async findOne(id): Promise<Todo> {
-  //   return await this.todoRepository.findOne({
-  //     where: { id },
-  //     include: [{ model: User, attributes: { exclude: ['password'] } }],
-  //   });
-  // }
-
   async delete(id, userId) {
     let result =  await this.todoRepository.destroy({ where: { id, userId } });
-    return result;
+    
+    // if the number of row affected is zero,
+    // then the todo doesn't exist in our db
+    if (result === 0) {
+      throw new NotFoundException(MessageEnum.deleteFailed);
+    }
+
+    // return success message
+    return MessageEnum.deleteSucceeded;
   }
 
   async update(id, data, userId) {
@@ -43,7 +45,12 @@ export class TodosService {
       { ...data },
       { where: { id, userId }, returning: true },
     );
-
-    return { numberOfAffectedRows: Number(res[1]) };
+    // if the number of row affected is zero,
+    // it means the todo doesn't exist in our db
+    if (Number(res[1]) === 0) {
+      throw new NotFoundException(MessageEnum.updateFailed);
+    }
+    // else it updated
+    return MessageEnum.updateSucceeded;
   }
 }
